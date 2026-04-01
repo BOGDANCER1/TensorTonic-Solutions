@@ -8,18 +8,15 @@ def pad_sequences(seqs, pad_value=0, max_len=None):
     """
     if not seqs:
         return np.array([])
+    
     if not max_len:
-        max_len = 0
-        for seq in seqs:
-            if (n:=len(seq)) > max_len:
-                max_len = n
+        max_len = max((len(seq) for seq in seqs))
 
     padded = np.full(shape=(len(seqs), max_len), fill_value=pad_value, dtype=int)
     # Adding seqs values to the padded matrix
-    for i in range(len(seqs)):
-        if len(seqs[i]) > max_len:
-            padded[i, :] = seqs[i][:max_len]
-        else:
-            padded[i, :len(seqs[i])] = seqs[i]
+    for i, seq in enumerate(seqs):
+        seq_length_to_pad = min(max_len, len(seq))
+
+        padded[i, :seq_length_to_pad] = seq[:seq_length_to_pad]
 
     return padded
