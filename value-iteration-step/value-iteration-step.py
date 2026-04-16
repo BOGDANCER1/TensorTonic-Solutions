@@ -1,5 +1,3 @@
-import numpy as np
-
 def value_iteration_step(values, transitions, rewards, gamma):
     """
     Perform one step of value iteration and return updated values.
